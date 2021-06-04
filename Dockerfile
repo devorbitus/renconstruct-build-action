@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-RUN apt-get update && apt-get install -y software-properties-common gnupg2 && \
+RUN apt-get update && apt-get install -y software-properties-common coreutils gnupg2 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64 && \
     add-apt-repository ppa:rmescandon/yq && \
     apt-get update -y && \
