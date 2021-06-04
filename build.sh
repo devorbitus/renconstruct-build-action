@@ -36,8 +36,9 @@ if [ "$(ls -A ../build)" ]; then
 else
     echo "Build directory not found, renConstruct will download the SDK."
     mkdir ../build
-    mkdir ../dist
 fi
+
+mkdir ../dist
 
 FULL_DIST_PATH=$(realpath "$GITHUB_WORKSPACE/../dist")
 echo ::set-output name=dir::"$FULL_DIST_PATH"
