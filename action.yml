@@ -30,8 +30,9 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.sdk-version }}
     - ${{ inputs.project-dir }}
+    - ${{ inputs.config-file }}
+    - ${{ inputs.android-config-file }}
 branding:
   color: 'gray-dark'
   icon: 'archive'
