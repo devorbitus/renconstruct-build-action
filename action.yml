@@ -10,12 +10,22 @@ inputs:
     description: "The path to the renConstruct config file relative to the root of the project"
     required: true
     default: 'config.yml'
+  android-config-file:
+    description: "The path to the android config json file relative to the root of the project"
+    required: false
+    default: '.android.json'
 
 outputs:
   dir:
     description: "The directory where the distributed files exist"
   version:
-    description: "The built version of the project"
+    description: "The built version of the desktop project"
+  android-numeric-game-version:
+    description: "The numeric android version of the built version"
+  sdk-version:
+    description: "The SDK version used"
+  android-package:
+    description: "The package name inside the configured .android.json file"
 runs:
   using: 'docker'
   image: 'Dockerfile'

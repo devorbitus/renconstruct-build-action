@@ -2,17 +2,31 @@
 
 CODE_FULL_PATH="$GITHUB_WORKSPACE"
 CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
+ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$3"
 
 if [ "$1" = "." ] 
 then
     echo "game directory is at the root of the repo"
 else
     echo "game directory is inside a sub directory of the repo"
-    CODE_FULL_PATH="$GITHUB_WORKSPACE/$1"
+    CODE_FULL_PATH="$GITHUB_WORKSPACE"
     CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
 fi
+
 SDK_VERSION=$(yq '.renutil.version' "$CONFIG_FULL_PATH")
-echo ::set-output name=version::"$SDK_VERSION"
+echo ::set-output name=sdk-version::"$SDK_VERSION"
+
+GAME_VERSION=$(grep -ERoh --include "*.rpy" "define\s+config.version\s+=\s+\".+\"" . | cut -d '"' -f 2)
+echo ::set-output name=version::"$GAME_VERSION"
+
+NUMERIC_GAME_VERSION="${GAME_VERSION//[\!0-9]/}"
+echo ::set-output name=android-numeric-game-version::"$NUMERIC_GAME_VERSION"
+
+# Update Android version config json to match game version
+jq -c --arg ver "$GAME_VERSION" --arg nver "$NUMERIC_GAME_VERSION" '.numeric_version = $nver | . | .version = $ver | .' "$ANDROID_JSON_FULL_PATH" >| "$ANDROID_JSON_FULL_PATH"
+
+ANDROID_PACKAGE_NAME=$(jq '.package' "$ANDROID_JSON_FULL_PATH")
+echo ::set-output name=android-package::"$ANDROID_PACKAGE_NAME"
 
 if [ "$(ls -A ../build)" ]; then
     echo "Cached copy of sdk found. No additional downloading will be required."
