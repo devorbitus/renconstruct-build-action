@@ -19,6 +19,9 @@ echo ::set-output name=sdk-version::"$SDK_VERSION"
 GAME_VERSION=$(grep -ERoh --include "*.rpy" "define\s+config.version\s+=\s+\".+\"" . | cut -d '"' -f 2)
 echo ::set-output name=version::"$GAME_VERSION"
 
+BUILD_NAME=$(grep -ERoh --include "*.rpy" "define\s+build.name\s+=\s+\".+\"" . | cut -d '"' -f 2)
+echo ::set-output name=build-name::"$BUILD_NAME"
+
 NUMERIC_GAME_VERSION="${GAME_VERSION//[\!0-9]/}"
 echo ::set-output name=android-numeric-game-version::"$NUMERIC_GAME_VERSION"
 
