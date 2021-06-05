@@ -2,28 +2,26 @@
 
 BUILD_FOLDER_NAME="build"
 echo "::debug::\$BUILD_FOLDER_NAME: $BUILD_FOLDER_NAME"
+DIST_FOLDER_NAME="renpy"
+echo "::debug::\$DIST_FOLDER_NAME: $DIST_FOLDER_NAME"
 CODE_FULL_PATH="$GITHUB_WORKSPACE"
 echo "::debug::\$CODE_FULL_PATH: $CODE_FULL_PATH"
 CONFIG_FULL_PATH="$CODE_FULL_PATH/$1"
 echo "::debug::\$CONFIG_FULL_PATH: $CONFIG_FULL_PATH"
-ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$3"
+ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$2"
 echo "::debug::\$ANDROID_JSON_FULL_PATH: $ANDROID_JSON_FULL_PATH"
 FULL_BUILD_PATH="$GITHUB_WORKSPACE/../$BUILD_FOLDER_NAME"
 echo "::debug::\$FULL_BUILD_PATH: $FULL_BUILD_PATH"
+FULL_DIST_PATH="$GITHUB_WORKSPACE/../$DIST_FOLDER_NAME"
+echo "::debug::\$FULL_DIST_PATH: $FULL_DIST_PATH"
 REAL_FULL_BUILD_PATH=$(realpath -s "$FULL_BUILD_PATH")
 echo "::debug::\$REAL_FULL_BUILD_PATH: $REAL_FULL_BUILD_PATH"
+REAL_FULL_DIST_PATH=$(realpath -s "$FULL_DIST_PATH")
+echo "::debug::\$REAL_FULL_DIST_PATH: $REAL_FULL_DIST_PATH"
 REPO_NAME=$(basename "$GITHUB_REPOSITORY")
 echo "::debug::\$REPO_NAME: $REPO_NAME"
-RUNNER_DIST_DIR_PATH="$2"
-echo "::debug::\$RUNNER_DIST_DIR_PATH: $RUNNER_DIST_DIR_PATH"
 
-mkdir -p "$RUNNER_DIST_DIR_PATH"
-
-if [ ! -d "$RUNNER_DIST_DIR_PATH" ]
-then
-    echo "::error::The shared-volume-path is not a mounted directory"
-    exit 1
-fi
+mkdir -p "$REAL_FULL_DIST_PATH"
 
 SDK_VERSION=$(yq read "$CONFIG_FULL_PATH" 'renutil.version')
 echo ::set-output name=sdk-version::"$SDK_VERSION"
@@ -55,10 +53,7 @@ echo ::set-output name=dir::"$RUNNER_DIST_DIR_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
-renconstruct -d -i "$CODE_FULL_PATH" -o "$RUNNER_DIST_DIR_PATH" -c "$CONFIG_FULL_PATH"
+renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
 
 REAL_FULL_DIST_PATH_LIST="$(ls -al "$REAL_FULL_DIST_PATH")"
 echo "::debug::\$REAL_FULL_DIST_PATH_LIST: $REAL_FULL_DIST_PATH_LIST"
-
-RUNNER_DIST_DIR_PATH_LIST="$(ls -al "$RUNNER_DIST_DIR_PATH")"
-echo "::debug::\$RUNNER_DIST_DIR_PATH_LIST: $RUNNER_DIST_DIR_PATH_LIST"
