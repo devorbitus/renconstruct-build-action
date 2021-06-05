@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 CODE_FULL_PATH="$GITHUB_WORKSPACE"
+echo "::debug::\$CODE_FULL_PATH: $CODE_FULL_PATH"
 CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
+echo "::debug::\$CONFIG_FULL_PATH: $CONFIG_FULL_PATH"
 ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$3"
+echo "::debug::\$ANDROID_JSON_FULL_PATH: $ANDROID_JSON_FULL_PATH"
 mkdir ../dist
 
 if [ "$1" = "." ] 
