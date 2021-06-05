@@ -11,7 +11,7 @@ else
     echo "game directory is inside a sub directory of the repo"
 fi
 
-SDK_VERSION=$(yq eval '.renutil.version' "$CONFIG_FULL_PATH")
+SDK_VERSION=$(yq read "$CONFIG_FULL_PATH" '.renutil.version')
 echo ::set-output name=sdk-version::"$SDK_VERSION"
 
 GAME_VERSION=$(grep -ERoh --include "*.rpy" "define\s+config.version\s+=\s+\".+\"" . | cut -d '"' -f 2)
