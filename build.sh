@@ -9,8 +9,6 @@ then
     echo "game directory is at the root of the repo"
 else
     echo "game directory is inside a sub directory of the repo"
-    CODE_FULL_PATH="$GITHUB_WORKSPACE"
-    CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
 fi
 
 SDK_VERSION=$(yq eval '.renutil.version' "$CONFIG_FULL_PATH")
