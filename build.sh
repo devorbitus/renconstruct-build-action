@@ -20,6 +20,8 @@ REAL_FULL_DIST_PATH=$(realpath -s "$FULL_DIST_PATH")
 echo "::debug::\$REAL_FULL_DIST_PATH: $REAL_FULL_DIST_PATH"
 REPO_NAME=$(basename "$GITHUB_REPOSITORY")
 echo "::debug::\$REPO_NAME: $REPO_NAME"
+PUBLIC_DIST_PATH="$3/DIST_FOLDER_NAME"
+echo "::debug::\$PUBLIC_DIST_PATH: $PUBLIC_DIST_PATH"
 
 mkdir -p "$REAL_FULL_DIST_PATH"
 
@@ -49,7 +51,7 @@ else
     mkdir -p "$REAL_FULL_BUILD_PATH"
 fi
 
-echo ::set-output name=dir::"$REAL_FULL_DIST_PATH"
+echo ::set-output name=dir::"$PUBLIC_DIST_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1

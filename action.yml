@@ -10,6 +10,10 @@ inputs:
     description: "The path to the android config json file relative to the root of the project"
     required: false
     default: '.android.json'
+  shared-mount-path:
+    description: "This path is kind of undocumented so placing it here in case it needs to be changed in the future without a code change to the action"
+    required: false
+    default: '/home/runner/work/_temp/_github_workflow'
 outputs:
   dir:
     description: "The directory where the distributed files exist"
@@ -29,6 +33,7 @@ runs:
   args:
     - ${{ inputs.config-file }}
     - ${{ inputs.android-config-file }}
+    - ${{ inputs.shared-mount-path }}
 branding:
   color: 'gray-dark'
   icon: 'archive'
