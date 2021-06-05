@@ -22,8 +22,15 @@ REPO_NAME=$(basename "$GITHUB_REPOSITORY")
 echo "::debug::\$REPO_NAME: $REPO_NAME"
 PUBLIC_DIST_PATH="$3/$DIST_FOLDER_NAME"
 echo "::debug::\$PUBLIC_DIST_PATH: $PUBLIC_DIST_PATH"
+PUBLIC_ACTION_WORKFLOW_PATH="/github/workflow"
+echo "::debug::\$PUBLIC_ACTION_WORKFLOW_PATH: $PUBLIC_ACTION_WORKFLOW_PATH"
+PUBLIC_ACTION_WORKFLOW_DIST_PATH="$PUBLIC_ACTION_WORKFLOW_PATH/$DIST_FOLDER_NAME"
+echo "::debug::\$PUBLIC_ACTION_WORKFLOW_DIST_PATH: $PUBLIC_ACTION_WORKFLOW_DIST_PATH"
 
 mkdir -p "$REAL_FULL_DIST_PATH"
+
+echo ::set-output name=dir::"$PUBLIC_DIST_PATH"
+echo ::set-output name=action-dir::"$PUBLIC_ACTION_WORKFLOW_DIST_PATH"
 
 SDK_VERSION=$(yq read "$CONFIG_FULL_PATH" 'renutil.version')
 echo ::set-output name=sdk-version::"$SDK_VERSION"
@@ -50,8 +57,6 @@ else
     echo "Build directory not found, renConstruct will download the SDK."
     mkdir -p "$REAL_FULL_BUILD_PATH"
 fi
-
-echo ::set-output name=dir::"$PUBLIC_DIST_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1

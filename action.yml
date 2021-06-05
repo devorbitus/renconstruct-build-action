@@ -17,6 +17,8 @@ inputs:
 outputs:
   dir:
     description: "The directory where the distributed files exist"
+  action-dir:
+    description: "The directory where the distributed files exist that another GitHub action can access"
   version:
     description: "The built version of the desktop project (config.version)"
   android-numeric-game-version:
