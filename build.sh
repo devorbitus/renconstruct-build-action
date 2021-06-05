@@ -1,35 +1,28 @@
 #!/usr/bin/env bash
 
-DIST_FOLDER_NAME="renpy_dist"
-echo "::debug::\$DIST_FOLDER_NAME: $DIST_FOLDER_NAME"
 BUILD_FOLDER_NAME="build"
 echo "::debug::\$BUILD_FOLDER_NAME: $BUILD_FOLDER_NAME"
 CODE_FULL_PATH="$GITHUB_WORKSPACE"
 echo "::debug::\$CODE_FULL_PATH: $CODE_FULL_PATH"
-CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
+CONFIG_FULL_PATH="$CODE_FULL_PATH/$1"
 echo "::debug::\$CONFIG_FULL_PATH: $CONFIG_FULL_PATH"
 ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$3"
 echo "::debug::\$ANDROID_JSON_FULL_PATH: $ANDROID_JSON_FULL_PATH"
-FULL_DIST_PATH="$GITHUB_WORKSPACE/$DIST_FOLDER_NAME"
-echo "::debug::\$FULL_DIST_PATH: $FULL_DIST_PATH"
-REAL_FULL_DIST_PATH=$(realpath -s "$FULL_DIST_PATH")
-echo "::debug::\$REAL_FULL_DIST_PATH: $REAL_FULL_DIST_PATH"
-FULL_BUILD_PATH="$GITHUB_WORKSPACE/$BUILD_FOLDER_NAME"
+FULL_BUILD_PATH="$GITHUB_WORKSPACE/../$BUILD_FOLDER_NAME"
 echo "::debug::\$FULL_BUILD_PATH: $FULL_BUILD_PATH"
-REAL_FULL_BUILD_PATH=$(realpath "$FULL_BUILD_PATH")
+REAL_FULL_BUILD_PATH=$(realpath -s "$FULL_BUILD_PATH")
 echo "::debug::\$REAL_FULL_BUILD_PATH: $REAL_FULL_BUILD_PATH"
 REPO_NAME=$(basename "$GITHUB_REPOSITORY")
 echo "::debug::\$REPO_NAME: $REPO_NAME"
-RUNNDER_DIST_DIR_PATH="/home/runner/work/$REPO_NAME/$REPO_NAME/$DIST_FOLDER_NAME"
+RUNNDER_DIST_DIR_PATH="$2"
 echo "::debug::\$RUNNDER_DIST_DIR_PATH: $RUNNDER_DIST_DIR_PATH"
 
 mkdir -p "$REAL_FULL_DIST_PATH"
 
-if [ "$1" = "." ] 
+if [ ! -d "$RUNNDER_DIST_DIR_PATH" ]
 then
-    echo "game directory is at the root of the repo"
-else
-    echo "game directory is inside a sub directory of the repo"
+    echo "::error::The shared-volume-path is not a mounted directory"
+    exit 1
 fi
 
 SDK_VERSION=$(yq read "$CONFIG_FULL_PATH" 'renutil.version')

@@ -4,7 +4,8 @@ RUN apt-get update -y && apt-get install -y software-properties-common gnupg2 &&
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64 && \
     add-apt-repository ppa:rmescandon/yq && add-apt-repository -y ppa:openjdk-r/ppa && \
     apt-get update -y && \
-    apt-get install --yes bzip2 wget libxext6 libllvm6.0 mesa-utils python3-pip yq jq openjdk-8-jdk
+    apt-get install --yes bzip2 wget libxext6 libllvm6.0 mesa-utils python3-pip yq && \
+    jq openjdk-8-jdk
 RUN pip3 install renconstruct
 
 ENV SDL_AUDIODRIVER=dummy

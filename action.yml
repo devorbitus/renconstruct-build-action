@@ -2,19 +2,18 @@ name: "Build Ren'Py Project using renConstruct"
 author: 'kobaltcore'
 description: "Utilize renConstruct to build distributions for Windows, Linux, macOS and Android"
 inputs:
-  project-dir:
-    description: "The path to the directory where the project exists"
-    required: true
-    default: '.'
   config-file:
     description: "The path to the renConstruct config file relative to the root of the project"
     required: true
     default: 'config.yml'
+  shared-volume-path:
+    description: "The path to the shared volume for the GitHub Action Job"
+    required: true
+    default: '/data/dist'
   android-config-file:
     description: "The path to the android config json file relative to the root of the project"
     required: false
     default: '.android.json'
-
 outputs:
   dir:
     description: "The directory where the distributed files exist"
@@ -32,8 +31,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.project-dir }}
     - ${{ inputs.config-file }}
+    - ${{ inputs.shared-volume-path }}
     - ${{ inputs.android-config-file }}
 branding:
   color: 'gray-dark'
