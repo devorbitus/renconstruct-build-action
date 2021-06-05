@@ -58,7 +58,7 @@ else
     mkdir -p "$REAL_FULL_BUILD_PATH"
 fi
 
-echo ::set-output name=dir::"$RUNNDER_DIST_DIR"
+echo ::set-output name=dir::"$RUNNDER_DIST_DIR_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
