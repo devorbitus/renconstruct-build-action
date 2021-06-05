@@ -6,7 +6,9 @@ CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
 echo "::debug::\$CONFIG_FULL_PATH: $CONFIG_FULL_PATH"
 ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$3"
 echo "::debug::\$ANDROID_JSON_FULL_PATH: $ANDROID_JSON_FULL_PATH"
-mkdir ../renpy
+FULL_DIST_PATH="$GITHUB_WORKSPACE/renpy"
+echo "::debug::\$FULL_DIST_PATH: $FULL_DIST_PATH"
+mkdir -p "$FULL_DIST_PATH"
 
 if [ "$1" = "." ] 
 then
@@ -41,9 +43,8 @@ else
     mkdir ../build
 fi
 
-FULL_DIST_PATH=$(realpath "$GITHUB_WORKSPACE/../renpy")
 echo ::set-output name=dir::"$FULL_DIST_PATH"
 
 # Execute renConstruct from within the build directory
 cd ../build || exit 1
-renconstruct -d -i "$CODE_FULL_PATH" -o ../dist -c "$CONFIG_FULL_PATH"
+renconstruct -d -i "$CODE_FULL_PATH" -o "$FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
