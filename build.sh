@@ -14,12 +14,12 @@ REAL_FULL_BUILD_PATH=$(realpath -s "$FULL_BUILD_PATH")
 echo "::debug::\$REAL_FULL_BUILD_PATH: $REAL_FULL_BUILD_PATH"
 REPO_NAME=$(basename "$GITHUB_REPOSITORY")
 echo "::debug::\$REPO_NAME: $REPO_NAME"
-RUNNDER_DIST_DIR_PATH="$2"
-echo "::debug::\$RUNNDER_DIST_DIR_PATH: $RUNNDER_DIST_DIR_PATH"
+RUNNER_DIST_DIR_PATH="$2"
+echo "::debug::\$RUNNER_DIST_DIR_PATH: $RUNNER_DIST_DIR_PATH"
 
-mkdir -p "$REAL_FULL_DIST_PATH"
+mkdir -p "$RUNNER_DIST_DIR_PATH"
 
-if [ ! -d "$RUNNDER_DIST_DIR_PATH" ]
+if [ ! -d "$RUNNER_DIST_DIR_PATH" ]
 then
     echo "::error::The shared-volume-path is not a mounted directory"
     exit 1
@@ -51,7 +51,7 @@ else
     mkdir -p "$REAL_FULL_BUILD_PATH"
 fi
 
-echo ::set-output name=dir::"$RUNNDER_DIST_DIR_PATH"
+echo ::set-output name=dir::"$RUNNER_DIST_DIR_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
