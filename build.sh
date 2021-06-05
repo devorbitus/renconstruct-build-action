@@ -10,6 +10,10 @@ FULL_DIST_PATH="$GITHUB_WORKSPACE/../renpy"
 echo "::debug::\$FULL_DIST_PATH: $FULL_DIST_PATH"
 REAL_FULL_DIST_PATH=$(realpath "$FULL_DIST_PATH")
 echo "::debug::\$REAL_FULL_DIST_PATH: $REAL_FULL_DIST_PATH"
+FULL_BUILD_PATH="$GITHUB_WORKSPACE/../build"
+echo "::debug::\$FULL_BUILD_PATH: $FULL_BUILD_PATH"
+REAL_FULL_BUILD_PATH=$(realpath "$FULL_BUILD_PATH")
+echo "::debug::\$REAL_FULL_BUILD_PATH: $REAL_FULL_BUILD_PATH"
 mkdir -p "$FULL_DIST_PATH"
 
 if [ "$1" = "." ] 
@@ -38,15 +42,15 @@ jq -c --arg ver "$GAME_VERSION" --arg nver "$NUMERIC_GAME_VERSION" '.numeric_ver
 ANDROID_PACKAGE_NAME=$(jq '.package' "$ANDROID_JSON_FULL_PATH")
 echo ::set-output name=android-package::"$ANDROID_PACKAGE_NAME"
 
-if [ "$(ls -A ../build)" ]; then
+if [ "$(ls -A "$REAL_FULL_BUILD_PATH")" ]; then
     echo "Cached copy of sdk found. No additional downloading will be required."
 else
     echo "Build directory not found, renConstruct will download the SDK."
-    mkdir ../build
+    mkdir -p "$REAL_FULL_BUILD_PATH"
 fi
 
 echo ::set-output name=dir::"$FULL_DIST_PATH"
 
 # Execute renConstruct from within the build directory
-cd ../build || exit 1
+cd "$REAL_FULL_BUILD_PATH" || exit 1
 renconstruct -d -i "$CODE_FULL_PATH" -o "$FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
