@@ -28,7 +28,7 @@ echo ::set-output name=version::"$GAME_VERSION"
 BUILD_NAME=$(grep -ERoh --include "*.rpy" "define\s+build.name\s+=\s+\".+\"" . | cut -d '"' -f 2)
 echo ::set-output name=build-name::"$BUILD_NAME"
 
-NUMERIC_GAME_VERSION="${GAME_VERSION//[0-9]/}"
+NUMERIC_GAME_VERSION="${GAME_VERSION//[!0-9]/}"
 echo ::set-output name=android-numeric-game-version::"$NUMERIC_GAME_VERSION"
 
 mv "$ANDROID_JSON_FULL_PATH" "$ANDROID_JSON_FULL_PATH".bak
