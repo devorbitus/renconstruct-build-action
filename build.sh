@@ -3,6 +3,7 @@
 CODE_FULL_PATH="$GITHUB_WORKSPACE"
 CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
 ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$3"
+mkdir ../dist
 
 if [ "$1" = "." ] 
 then
@@ -35,8 +36,6 @@ else
     echo "Build directory not found, renConstruct will download the SDK."
     mkdir ../build
 fi
-
-mkdir ../dist
 
 FULL_DIST_PATH=$(realpath "$GITHUB_WORKSPACE/../dist")
 echo ::set-output name=dir::"$FULL_DIST_PATH"
