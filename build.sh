@@ -13,7 +13,7 @@ else
     CONFIG_FULL_PATH="$CODE_FULL_PATH/$2"
 fi
 
-SDK_VERSION=$(yq e '.renutil.version' "$CONFIG_FULL_PATH")
+SDK_VERSION=$(yq eval '.renutil.version' "$CONFIG_FULL_PATH")
 echo ::set-output name=sdk-version::"$SDK_VERSION"
 
 GAME_VERSION=$(grep -ERoh --include "*.rpy" "define\s+config.version\s+=\s+\".+\"" . | cut -d '"' -f 2)
