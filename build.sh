@@ -39,7 +39,7 @@ mv "$ANDROID_JSON_FULL_PATH" "$ANDROID_JSON_FULL_PATH".bak
 # Update Android version config json to match game version
 jq -c --arg ver "$GAME_VERSION" --arg nver "$NUMERIC_GAME_VERSION" '.numeric_version = $nver | . | .version = $ver | .' "$ANDROID_JSON_FULL_PATH".bak > "$ANDROID_JSON_FULL_PATH"
 
-ANDROID_PACKAGE_NAME=$(jq '.package' "$ANDROID_JSON_FULL_PATH")
+ANDROID_PACKAGE_NAME=$(jq -r '.package' "$ANDROID_JSON_FULL_PATH")
 echo ::set-output name=android-package::"$ANDROID_PACKAGE_NAME"
 
 if [ "$(ls -A "$REAL_FULL_BUILD_PATH")" ]; then
@@ -49,8 +49,11 @@ else
     mkdir -p "$REAL_FULL_BUILD_PATH"
 fi
 
-echo ::set-output name=dir::"$REAL_FULL_BUILD_PATH"
+echo ::set-output name=dir::"$REAL_FULL_DIST_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
-renconstruct -d -i "$CODE_FULL_PATH" -o "$FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
+renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
+
+REAL_FULL_DIST_PATH_LIST="$(ls -al "$REAL_FULL_DIST_PATH")"
+echo "::debug::\$REAL_FULL_DIST_PATH_LIST: $REAL_FULL_DIST_PATH_LIST"
