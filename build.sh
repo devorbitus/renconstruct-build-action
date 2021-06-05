@@ -55,10 +55,10 @@ echo ::set-output name=dir::"$RUNNER_DIST_DIR_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
-renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
+renconstruct -d -i "$CODE_FULL_PATH" -o "$RUNNER_DIST_DIR_PATH" -c "$CONFIG_FULL_PATH"
 
 REAL_FULL_DIST_PATH_LIST="$(ls -al "$REAL_FULL_DIST_PATH")"
 echo "::debug::\$REAL_FULL_DIST_PATH_LIST: $REAL_FULL_DIST_PATH_LIST"
 
-RUNNDER_DIST_DIR_PATH_LIST="$(ls -al "$RUNNDER_DIST_DIR_PATH")"
-echo "::debug::\$RUNNDER_DIST_DIR_PATH_LIST: $RUNNDER_DIST_DIR_PATH_LIST"
+RUNNER_DIST_DIR_PATH_LIST="$(ls -al "$RUNNER_DIST_DIR_PATH")"
+echo "::debug::\$RUNNER_DIST_DIR_PATH_LIST: $RUNNER_DIST_DIR_PATH_LIST"
