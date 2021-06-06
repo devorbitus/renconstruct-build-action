@@ -44,11 +44,16 @@ echo ::set-output name=build-name::"$BUILD_NAME"
 NUMERIC_GAME_VERSION="${GAME_VERSION//[!0-9]/}"
 echo ::set-output name=android-numeric-game-version::"$NUMERIC_GAME_VERSION"
 
-mv "$ANDROID_JSON_FULL_PATH" "$ANDROID_JSON_FULL_PATH".bak
-# Update Android version config json to match game version
-jq -c --arg ver "$GAME_VERSION" --arg nver "$NUMERIC_GAME_VERSION" '.numeric_version = $nver | . | .version = $ver | .' "$ANDROID_JSON_FULL_PATH".bak > "$ANDROID_JSON_FULL_PATH"
+if [ -f "$ANDROID_JSON_FULL_PATH" ];
+then
+    echo "Android configuration json found. Changing Android configuration json version information to match."
+    mv "$ANDROID_JSON_FULL_PATH" "$ANDROID_JSON_FULL_PATH".bak
+    # Update Android version config json to match game version
+    jq -c --arg ver "$GAME_VERSION" --arg nver "$NUMERIC_GAME_VERSION" '.numeric_version = $nver | . | .version = $ver | .' "$ANDROID_JSON_FULL_PATH".bak > "$ANDROID_JSON_FULL_PATH"
 
-ANDROID_PACKAGE_NAME=$(jq -r '.package' "$ANDROID_JSON_FULL_PATH")
+    ANDROID_PACKAGE_NAME=$(jq -r '.package' "$ANDROID_JSON_FULL_PATH")
+fi
+
 echo ::set-output name=android-package::"$ANDROID_PACKAGE_NAME"
 
 if [ "$(ls -A "$REAL_FULL_BUILD_PATH")" ]; then
