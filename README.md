@@ -6,31 +6,31 @@ Github Action to utilize renConstruct to build Mac/PC/Linux and Android distribu
 - [Table of Contents](#table-of-contents)
 - [Usage](#usage)
 - [Inputs](#inputs)
-    - [Required Input](#required-input)
-        - [Config file](#config-file)
-    - [Optional Inputs](#optional-inputs)
-        - [Android Config file](#android-config-file)
-        - [Shared Mount Path](#shared-mount-path)
-        - [Action Shared Mount Path](#action-shared-mount-path)
-        - [Android Auto Upgrade Version](#android-auto-upgrade-version)
+  - [Required Input](#required-input)
+    - [Config file](#config-file)
+  - [Optional Inputs](#optional-inputs)
+    - [Android Config file](#android-config-file)
+    - [Shared Mount Path](#shared-mount-path)
+    - [Action Shared Mount Path](#action-shared-mount-path)
+    - [Android Auto Upgrade Version](#android-auto-upgrade-version)
 - [Output](#output)
-    - [Local Dir](#local-dir)
-    - [Action Dir](#action-dir)
-    - [Version](#version)
-    - [Android Numeric Game Version](#android-numeric-game-version)
-    - [SDK Version](#sdk-version)
-    - [Android Package](#android-package)
-    - [Build Name](#build-name)
+  - [Local Dir](#local-dir)
+  - [Action Dir](#action-dir)
+  - [Version](#version)
+  - [Android Numeric Game Version](#android-numeric-game-version)
+  - [SDK Version](#sdk-version)
+  - [Android Package](#android-package)
+  - [Build Name](#build-name)
 - [Advanced Usage](#advanced-usage)
-    - [Caching SDK download](#caching-sdk-download)
-    - [Caching SDK AND Upload distributions to Mega AND Itch.io](#caching-sdk-and-upload-distributions-to-mega-and-itchio)
+  - [Caching SDK download](#caching-sdk-download)
+  - [Caching SDK AND Upload distributions to Mega AND Itch.io](#caching-sdk-and-upload-distributions-to-mega-and-itchio)
 <!-- /TOC -->
 
 ## Usage
 Build for mac and/or pc/linux only and NOT android
 ```yml
   - name: Build VN Project New
-    uses: devorbitus/renconstruct-build-action@main
+    uses: devorbitus/renconstruct-build-action@v1.0.3
     id: buildStep
     with:
         config-file: 'config.yml'
@@ -38,7 +38,7 @@ Build for mac and/or pc/linux only and NOT android
 Build for mac and/or pc/linux only AND android
 ```yml
   - name: Build VN Project New
-    uses: devorbitus/renconstruct-build-action@main
+    uses: devorbitus/renconstruct-build-action@v1.0.3
     id: buildStep
     with:
         config-file: 'config.yml'
@@ -122,7 +122,7 @@ Change this default to anything other than `true`, and it won't auto-increment t
 
 ```yml
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@v1.0.0
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -140,7 +140,7 @@ The directory where the distributed files exist
 
 ```yml
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@v1.0.0
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -150,7 +150,7 @@ The directory where the distributed files exist
       # ... maybe other steps
       - name: Upload to Mega
         id: uploadMega
-        uses: Difegue/action-megacmd@master
+        uses: Difegue/action-megacmd@1.1.0
         with:
           args: put ${{ format('{0}/{1}-{2}-mac.zip', steps.buildStep.outputs.action-dir, steps.buildStep.outputs.build-name, steps.buildStep.outputs.version) }} /path/to/my-mega-dist-folder/
 ```
@@ -161,7 +161,7 @@ The directory where the distributed files exist that another container-based Git
 
 ```yml
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@v1.0.0
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -182,7 +182,7 @@ The built version of the desktop project (config.version)
 
 ```yml
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@v1.0.0
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -203,7 +203,7 @@ The numeric android version of the built version
 
 ```yml
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@v1.0.0
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -225,7 +225,7 @@ The SDK version used (pulled from the config.yml of renConstruct)
 
 ```yml
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@v1.0.0
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -246,7 +246,7 @@ The package name inside the configured .android.json file
 
 ```yml
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@v1.0.0
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -299,7 +299,7 @@ jobs:
           path: ../build
           key:  ${{ runner.os }}-sdk-${{ steps.lookupSdkVersion.outputs.result }}
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@main
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
@@ -351,7 +351,7 @@ jobs:
           path: ../build
           key:  ${{ runner.os }}-sdk-${{ steps.lookupSdkVersion.outputs.result }}
       - name: Build VN Project New
-        uses: devorbitus/renconstruct-build-action@main
+        uses: devorbitus/renconstruct-build-action@v1.0.3
         id: buildStep
         with:
           config-file: 'config.yml'
