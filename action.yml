@@ -1,4 +1,4 @@
-name: "Build Ren'Py Project using renConstruct"
+name: "Build Ren'Py (renpy) Project using renConstruct"
 author: 'kobaltcore'
 description: "Utilize renConstruct to build distributions for Windows, Linux, macOS and Android"
 inputs:
@@ -7,7 +7,7 @@ inputs:
     required: true
     default: 'config.yml'
   android-config-file:
-    description: "The path to the android config json file relative to the root of the project"
+    description: "The path to the android config JSON file relative to the root of the project"
     required: false
     default: '.android.json'
   shared-mount-path:
@@ -15,7 +15,7 @@ inputs:
     required: false
     default: '/home/runner/work/_temp/_github_workflow'
   action-shared-mount-path:
-    description: "This path is kind of undocumented so placing it here in case it needs to be changed in the future without a code change to the action. This "
+    description: "This path is kind of undocumented so placing it here in case it needs to be changed in the future without a code change to the action. This is the path that container based actions will have access to as actions mounts the host directory into the container."
     required: false
     default: '/github/workflow'
   android-auto-upgrade-version:
@@ -47,5 +47,5 @@ runs:
     - ${{ inputs.action-shared-mount-path }}
     - ${{ inputs.android-auto-upgrade-version }}
 branding:
-  color: 'gray-dark'
-  icon: 'archive'
+  color: 'blue'
+  icon: 'package'
