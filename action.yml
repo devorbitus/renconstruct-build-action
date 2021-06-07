@@ -14,6 +14,14 @@ inputs:
     description: "This path is kind of undocumented so placing it here in case it needs to be changed in the future without a code change to the action"
     required: false
     default: '/home/runner/work/_temp/_github_workflow'
+  action-shared-mount-path:
+    description: "This path is kind of undocumented so placing it here in case it needs to be changed in the future without a code change to the action. This "
+    required: false
+    default: '/github/workflow'
+  android-auto-upgrade-version:
+    description: "Change this default to anything other than 'true' and it won't auto increment the version within the android config json file"
+    required: false
+    default: 'true'
 outputs:
   local-dir:
     description: "The directory where the distributed files exist"
@@ -36,6 +44,8 @@ runs:
     - ${{ inputs.config-file }}
     - ${{ inputs.android-config-file }}
     - ${{ inputs.shared-mount-path }}
+    - ${{ inputs.action-shared-mount-path }}
+    - ${{ inputs.android-auto-upgrade-version }}
 branding:
   color: 'gray-dark'
   icon: 'archive'
