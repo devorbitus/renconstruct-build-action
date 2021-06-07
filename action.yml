@@ -1,5 +1,5 @@
 name: "Build Ren'Py (renpy) Project using renConstruct"
-author: 'kobaltcore'
+author: 'devorbitus'
 description: "Utilize renConstruct to build distributions for Windows, Linux, macOS and Android"
 inputs:
   config-file:
