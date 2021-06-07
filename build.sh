@@ -52,6 +52,7 @@ echo ::set-output name=android-numeric-game-version::"$NUMERIC_GAME_VERSION"
 echo "::debug::\$NUMERIC_GAME_VERSION: $NUMERIC_GAME_VERSION"
 
 if [ "$5" = "true" ] && [ "$ANDROID_BUILD_ENABLED" = "true" ];
+then
     if [ ! -f "$ANDROID_JSON_FULL_PATH" ]; 
     then
         echo "::error::Android configuration json not found but android build is enabled. Try creating an android configuration json file through building an android distribution locally within the renpy launcher first and checking that android config file into the repo."
@@ -64,7 +65,7 @@ if [ "$5" = "true" ] && [ "$ANDROID_BUILD_ENABLED" = "true" ];
 
         ANDROID_PACKAGE_NAME=$(jq -r '.package' "$ANDROID_JSON_FULL_PATH")
     fi
-then
+else
     echo "Android build not enabled within renConstruct config file."
 fi
 
