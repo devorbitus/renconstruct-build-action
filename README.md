@@ -56,23 +56,63 @@ The keystore file can be found within the Ren'Py SDK `rapt` directory in a file 
 
 #### Config file
 
+```yml
+    id: buildStep
+    with:
+        config-file: 'config.yml'
+```
+
 The path to the renConstruct config file relative to the root of the project
 
 ### Optional Inputs
 
 #### Android Config file
 
+```yml
+    id: buildStep
+    with:
+        config-file: 'config.yml'
+        android-config-file: '.android.json'
+```
+
 The path to the android config JSON file relative to the root of the project
 
 #### Shared Mount Path
+
+```yml
+    id: buildStep
+    with:
+        config-file: 'config.yml'
+        android-config-file: '.android.json'
+        shared-mount-path: '/home/runner/work/_temp/_github_workflow'
+```
 
 This path is undocumented, so placing it here in case it needs to be changed in the future without a code change to the action
 
 #### Action Shared Mount Path
 
+```yml
+    id: buildStep
+    with:
+        config-file: 'config.yml'
+        android-config-file: '.android.json'
+        shared-mount-path: '/home/runner/work/_temp/_github_workflow'
+        action-shared-mount-path: '/github/workflow'
+```
+
 This path is undocumented, so placing it here in case it needs to be changed in the future without a code change to the action that container-based actions will have access to as actions mounts the host directory into the container.
 
 #### Android Auto Upgrade Version
+
+```yml
+    id: buildStep
+    with:
+        config-file: 'config.yml'
+        android-config-file: '.android.json'
+        shared-mount-path: '/home/runner/work/_temp/_github_workflow'
+        action-shared-mount-path: '/github/workflow'
+        android-auto-upgrade-version: 'true'
+```
 
 Change this default to anything other than `true`, and it won't auto-increment the version within the android config JSON file
 
@@ -80,29 +120,146 @@ Change this default to anything other than `true`, and it won't auto-increment t
 
 ### Local Dir
 
+```yml
+      - name: Build VN Project New
+        uses: devorbitus/renconstruct-build-action@v1.0.0
+        id: buildStep
+        with:
+          config-file: 'config.yml'
+          android-config-file: '.android.json'
+        env:
+          RC_KEYSTORE: ${{ secrets.BASE64_ANDROID_KEYSTORE }}
+      # ... maybe other steps
+      - name: List Built Distributions
+        run: ls -al ${{ steps.buildStep.outputs.local-dir }}
+```
+
 The directory where the distributed files exist
 
 ### Action Dir
+
+```yml
+      - name: Build VN Project New
+        uses: devorbitus/renconstruct-build-action@v1.0.0
+        id: buildStep
+        with:
+          config-file: 'config.yml'
+          android-config-file: '.android.json'
+        env:
+          RC_KEYSTORE: ${{ secrets.BASE64_ANDROID_KEYSTORE }}
+      # ... maybe other steps
+      - name: Upload to Mega
+        id: uploadMega
+        uses: Difegue/action-megacmd@master
+        with:
+          args: put ${{ format('{0}/{1}-{2}-mac.zip', steps.buildStep.outputs.action-dir, steps.buildStep.outputs.build-name, steps.buildStep.outputs.version) }} /path/to/my-mega-dist-folder/
+```
 
 The directory where the distributed files exist that another container-based GitHub action can access
 
 ### Version
 
+```yml
+      - name: Build VN Project New
+        uses: devorbitus/renconstruct-build-action@v1.0.0
+        id: buildStep
+        with:
+          config-file: 'config.yml'
+          android-config-file: '.android.json'
+        env:
+          RC_KEYSTORE: ${{ secrets.BASE64_ANDROID_KEYSTORE }}
+      # ... maybe other steps
+      - name: Upload to Mega
+        id: uploadMega
+        uses: Difegue/action-megacmd@1.1.0
+        with:
+          args: put ${{ format('{0}/{1}-{2}-mac.zip', steps.buildStep.outputs.action-dir, steps.buildStep.outputs.build-name, steps.buildStep.outputs.version) }} /path/to/my-mega-dist-folder/
+```
+
 The built version of the desktop project (config.version)
 
 ### Android Numeric Game Version
+
+```yml
+      - name: Build VN Project New
+        uses: devorbitus/renconstruct-build-action@v1.0.0
+        id: buildStep
+        with:
+          config-file: 'config.yml'
+          android-config-file: '.android.json'
+        env:
+          RC_KEYSTORE: ${{ secrets.BASE64_ANDROID_KEYSTORE }}
+      # ... maybe other steps
+      - name: Upload to Mega
+        id: uploadMega
+        uses: Difegue/action-megacmd@1.1.0
+        with:
+          args: put ${{ format('{0}/{1}-{2}-universal-release.apk', steps.buildStep.outputs.action-dir, steps.buildStep.outputs.android-package, steps.buildStep.outputs.android-numeric-game-version) }} /path/to/my-mega-dist-folder/
+```
 
 The numeric android version of the built version
 
 ### SDK Version
 
-The SDK version used (pulled from the config.yml of renComplete)
+```yml
+      - name: Build VN Project New
+        uses: devorbitus/renconstruct-build-action@v1.0.0
+        id: buildStep
+        with:
+          config-file: 'config.yml'
+          android-config-file: '.android.json'
+        env:
+          RC_KEYSTORE: ${{ secrets.BASE64_ANDROID_KEYSTORE }}
+      # ... maybe other steps
+      - name: Upload to Mega
+        id: uploadMega
+        uses: Difegue/action-megacmd@1.1.0
+        with:
+          # adding the -c makes mega create the folder for the version if it doesn't exist
+          args: put -c ${{ format('{0}/{1}-{2}-mac.zip', steps.buildStep.outputs.action-dir, steps.buildStep.outputs.build-name, steps.buildStep.outputs.version) }} /path/to/my-mega-dist-folder/sdk/${{ steps.buildStep.outputs.sdk-version }}/gameVersion/${{ steps.buildStep.outputs.version }}/
+```
+
+The SDK version used (pulled from the config.yml of renConstruct)
 
 ### Android Package
+
+```yml
+      - name: Build VN Project New
+        uses: devorbitus/renconstruct-build-action@v1.0.0
+        id: buildStep
+        with:
+          config-file: 'config.yml'
+          android-config-file: '.android.json'
+        env:
+          RC_KEYSTORE: ${{ secrets.BASE64_ANDROID_KEYSTORE }}
+      # ... maybe other steps
+      - name: Upload to Mega
+        id: uploadMega
+        uses: Difegue/action-megacmd@1.1.0
+        with:
+          args: put ${{ format('{0}/{1}-{2}-universal-release.apk', steps.buildStep.outputs.action-dir, steps.buildStep.outputs.android-package, steps.buildStep.outputs.android-numeric-game-version) }} /path/to/my-mega-dist-folder/
+```
 
 The package name inside the configured .android.json file
 
 ### Build Name
+
+```yml
+      - name: Build VN Project New
+        uses: devorbitus/renconstruct-build-action@v1.0.0
+        id: buildStep
+        with:
+          config-file: 'config.yml'
+          android-config-file: '.android.json'
+        env:
+          RC_KEYSTORE: ${{ secrets.BASE64_ANDROID_KEYSTORE }}
+      # ... maybe other steps
+      - name: Upload to Mega
+        id: uploadMega
+        uses: Difegue/action-megacmd@1.1.0
+        with:
+          args: put ${{ format('{0}/{1}-{2}-mac.zip', steps.buildStep.outputs.action-dir, steps.buildStep.outputs.build-name, steps.buildStep.outputs.version) }} /path/to/my-mega-dist-folder/
+```
 
 The official build name from the desktop project (build.name)
 
