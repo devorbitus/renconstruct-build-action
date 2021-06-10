@@ -80,8 +80,8 @@ mkdir -p "$REAL_FULL_BUILD_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
-#renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
-echo "SIMULATION: runningRenconstructWithArgs -d -i \"$CODE_FULL_PATH\" -o \"$REAL_FULL_DIST_PATH\" -c \"$CONFIG_FULL_PATH\""
+renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
+# echo "SIMULATION: runningRenconstructWithArgs -d -i \"$CODE_FULL_PATH\" -o \"$REAL_FULL_DIST_PATH\" -c \"$CONFIG_FULL_PATH\""
 
 REAL_FULL_DIST_PATH_LIST="$(ls -al "$REAL_FULL_DIST_PATH")"
 echo "::debug::\$REAL_FULL_DIST_PATH_LIST: $REAL_FULL_DIST_PATH_LIST"

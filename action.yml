@@ -49,7 +49,7 @@ runs:
   steps:
     - run: brew install coreutils
       shell: 'bash'
-    - run: ${{ github.action_path }}/build.sh ${{ inputs.config-file }} ${{ inputs.android-config-file }} ${{ inputs.shared-mount-path }} ${{ inputs.action-shared-mount-path }} ${{ inputs.android-auto-upgrade-version }} ${{ runner.os }}
+    - run: ${{ github.action_path }}/build.sh "${{ inputs.config-file }}" "${{ inputs.android-config-file }}" "${{ inputs.shared-mount-path }}" "${{ inputs.action-shared-mount-path }}" "${{ inputs.android-auto-upgrade-version }}" "${{ runner.os }}"
       id: rba
       shell: 'bash'
 branding:
