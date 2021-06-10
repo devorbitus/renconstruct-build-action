@@ -37,11 +37,11 @@ mkdir -p "$REAL_FULL_DIST_PATH"
 echo ::set-output name=local-dir::"$PUBLIC_DIST_PATH"
 echo ::set-output name=action-dir::"$PUBLIC_ACTION_WORKFLOW_DIST_PATH"
 
-SDK_VERSION=$(yq read "$CONFIG_FULL_PATH" 'renutil.version')
+SDK_VERSION=$(yq eval '.renutil.version' "$CONFIG_FULL_PATH")
 echo ::set-output name=sdk-version::"$SDK_VERSION"
 echo "::debug::\$SDK_VERSION: $SDK_VERSION"
 
-ANDROID_BUILD_ENABLED=$(yq read "$CONFIG_FULL_PATH" 'build.android')
+ANDROID_BUILD_ENABLED=$(yq eval '.build.android' "$CONFIG_FULL_PATH")
 echo "::debug::\$ANDROID_BUILD_ENABLED: $ANDROID_BUILD_ENABLED"
 
 GAME_VERSION=$(grep -ERoh --include "*.rpy" "define\s+config.version\s+=\s+\".+\"" . | cut -d '"' -f 2)
