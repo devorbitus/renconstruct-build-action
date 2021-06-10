@@ -25,27 +25,32 @@ inputs:
 outputs:
   local-dir:
     description: "The directory where the distributed files exist"
+    value: 'cat ${{ github.action_path }}/.local-dir'
   action-dir:
     description: "The directory where the distributed files exist that another GitHub action can access"
+    value: 'cat ${{ github.action_path }}/.action-dir'
   version:
     description: "The built version of the desktop project (config.version)"
+    value: 'cat ${{ github.action_path }}/.version'
   android-numeric-game-version:
     description: "The numeric android version of the built version"
+    value: 'cat ${{ github.action_path }}/.android-numeric-game-version'
   sdk-version:
     description: "The SDK version used"
+    value: 'cat ${{ github.action_path }}/.sdk-version'
   android-package:
     description: "The package name inside the configured .android.json file"
+    value: 'cat ${{ github.action_path }}/.android-package'
   build-name:
     description: "The official build name from the desktop project (build.name)"
+    value: 'cat ${{ github.action_path }}/.build-name'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.config-file }}
-    - ${{ inputs.android-config-file }}
-    - ${{ inputs.shared-mount-path }}
-    - ${{ inputs.action-shared-mount-path }}
-    - ${{ inputs.android-auto-upgrade-version }}
+  using: 'composite'
+  steps:
+    - run: brew install yq
+      shell: 'bash'
+    - run: ${{ github.action_path }}/build.sh ${{ inputs.config-file }} ${{ inputs.android-config-file }} ${{ inputs.shared-mount-path }} ${{ inputs.action-shared-mount-path }} ${{ inputs.android-auto-upgrade-version }} ${{ runner.os }}
+      shell: 'bash'
 branding:
   color: 'blue'
   icon: 'package'
