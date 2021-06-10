@@ -76,12 +76,7 @@ fi
 
 echo ::set-output name=android-package::"$ANDROID_PACKAGE_NAME"
 
-if [ "$(ls -A "$REAL_FULL_BUILD_PATH")" ]; then
-    echo "Cached copy of sdk found. No additional downloading will be required."
-else
-    echo "Build directory not found, renConstruct will download the SDK."
-    mkdir -p "$REAL_FULL_BUILD_PATH"
-fi
+mkdir -p "$REAL_FULL_BUILD_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
