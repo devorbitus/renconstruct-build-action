@@ -24,6 +24,8 @@ then
         exit 1
     fi
     brew install coreutils
+else
+    echo "::debug::Found realpath to already be installed, yay!"
 fi
 if ! command -v yq &> /dev/null
 then
@@ -34,6 +36,8 @@ then
         exit 1
     fi
     brew install yq
+else
+    echo "::debug::Found yq to already be installed, yay!"
 fi
 if ! command -v renconstruct &> /dev/null
 then
@@ -44,6 +48,8 @@ then
         exit 1
     fi
     pip3 install renconstruct
+else
+    echo "::debug::Found renconstruct to already be installed, yay!"
 fi
 
 BUILD_FOLDER_NAME="build"
@@ -56,9 +62,9 @@ CONFIG_FULL_PATH="$CODE_FULL_PATH/$1"
 echo "::debug::\$CONFIG_FULL_PATH: $CONFIG_FULL_PATH"
 ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$2"
 echo "::debug::\$ANDROID_JSON_FULL_PATH: $ANDROID_JSON_FULL_PATH"
-FULL_BUILD_PATH="$GITHUB_ACTION_PATH/$BUILD_FOLDER_NAME"
+FULL_BUILD_PATH="$7/$BUILD_FOLDER_NAME"
 echo "::debug::\$FULL_BUILD_PATH: $FULL_BUILD_PATH"
-FULL_DIST_PATH="$GITHUB_ACTION_PATH/$DIST_FOLDER_NAME"
+FULL_DIST_PATH="$7/$DIST_FOLDER_NAME"
 echo "::debug::\$FULL_DIST_PATH: $FULL_DIST_PATH"
 REAL_FULL_BUILD_PATH=$(realpath -s "$FULL_BUILD_PATH")
 echo "::debug::\$REAL_FULL_BUILD_PATH: $REAL_FULL_BUILD_PATH"
@@ -66,7 +72,7 @@ REAL_FULL_DIST_PATH=$(realpath -s "$FULL_DIST_PATH")
 echo "::debug::\$REAL_FULL_DIST_PATH: $REAL_FULL_DIST_PATH"
 REPO_NAME=$(basename "$GITHUB_REPOSITORY")
 echo "::debug::\$REPO_NAME: $REPO_NAME"
-PUBLIC_DIST_PATH="$GITHUB_ACTION_PATH/$DIST_FOLDER_NAME"
+PUBLIC_DIST_PATH="$7/$DIST_FOLDER_NAME"
 echo "::debug::\$PUBLIC_DIST_PATH: $PUBLIC_DIST_PATH"
 PUBLIC_ACTION_WORKFLOW_PATH="$GITHUB_ACTION_PATH"
 echo "::debug::\$PUBLIC_ACTION_WORKFLOW_PATH: $PUBLIC_ACTION_WORKFLOW_PATH"
