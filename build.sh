@@ -5,19 +5,19 @@ then
     echo "::debug::runner is macOS"
     if [ -d "$HOME/Library/Android/sdk/ndk/" ];
     then
-        echo "Existing conflicting Android NDK found so deleting it"
+        echo "::warning::Existing conflicting Android NDK found so deleting it"
         rm -rf "$HOME/Library/Android/sdk/ndk/"
     fi
     if [ -d "$HOME/Library/Android/sdk/ndk-bundle/" ];
     then
-        echo "Existing conflicting Android NDK bundle found so deleting it"
+        echo "::warning::Existing conflicting Android NDK bundle found so deleting it"
         rm -rf "$HOME/Library/Android/sdk/ndk-bundle/"
     fi
 fi
 
 if ! command -v realpath &> /dev/null
 then
-    echo "realpath command could not be found, so installing it"
+    echo "::warning::realpath command could not be found, so installing it"
     if ! command -v brew &> /dev/null
     then
         echo "::error::brew command could not be found, so aborting"
@@ -29,7 +29,7 @@ else
 fi
 if ! command -v yq &> /dev/null
 then
-    echo "yq command could not be found, so installing it"
+    echo "::warning::yq command could not be found, so installing it"
     if ! command -v brew &> /dev/null
     then
         echo "::error::brew command could not be found, so aborting"
@@ -41,7 +41,7 @@ else
 fi
 if ! command -v renconstruct &> /dev/null
 then
-    echo "renconstruct command could not be found, so installing it"
+    echo "::warning::renconstruct command could not be found, so installing it"
     if ! command -v pip3 &> /dev/null
     then
         echo "::error::pip3 command could not be found, so aborting"
