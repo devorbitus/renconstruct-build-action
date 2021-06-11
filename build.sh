@@ -3,6 +3,16 @@
 if [ "$6" = "macOS" ];
 then
     echo "::debug::runner is macOS"
+    if [ -d "$HOME/Library/Android/sdk/ndk/" ];
+    then
+        echo "Existing conflicting Android NDK found so deleting it"
+        rm -rf "$HOME/Library/Android/sdk/ndk/"
+    fi
+    if [ -d "$HOME/Library/Android/sdk/ndk-bundle/" ];
+    then
+        echo "Existing conflicting Android NDK bundle found so deleting it"
+        rm -rf "$HOME/Library/Android/sdk/ndk-bundle/"
+    fi
 fi
 
 BUILD_FOLDER_NAME="build"
