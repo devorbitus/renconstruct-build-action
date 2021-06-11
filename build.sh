@@ -13,16 +13,37 @@ then
         echo "Existing conflicting Android NDK bundle found so deleting it"
         rm -rf "$HOME/Library/Android/sdk/ndk-bundle/"
     fi
-    if ! command -v realpath &> /dev/null
+fi
+
+if ! command -v realpath &> /dev/null
+then
+    echo "realpath command could not be found, so installing it"
+    if ! command -v brew &> /dev/null
     then
-        echo "realpath command could not be found, so installing it"
-        brew install coreutils
+        echo "::error::brew command could not be found, so aborting"
+        exit 1
     fi
-    if ! command -v yq &> /dev/null
+    brew install coreutils
+fi
+if ! command -v yq &> /dev/null
+then
+    echo "yq command could not be found, so installing it"
+    if ! command -v brew &> /dev/null
     then
-        echo "yq command could not be found, so installing it"
-        brew install yq
+        echo "::error::brew command could not be found, so aborting"
+        exit 1
     fi
+    brew install yq
+fi
+if ! command -v renconstruct &> /dev/null
+then
+    echo "renconstruct command could not be found, so installing it"
+    if ! command -v pip3 &> /dev/null
+    then
+        echo "::error::pip3 command could not be found, so aborting"
+        exit 1
+    fi
+    pip3 install renconstruct
 fi
 
 BUILD_FOLDER_NAME="build"
