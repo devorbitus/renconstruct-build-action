@@ -13,6 +13,16 @@ then
         echo "Existing conflicting Android NDK bundle found so deleting it"
         rm -rf "$HOME/Library/Android/sdk/ndk-bundle/"
     fi
+    if ! command -v realpath &> /dev/null
+    then
+        echo "realpath command could not be found, so installing it"
+        brew install coreutils
+    fi
+    if ! command -v yq &> /dev/null
+    then
+        echo "yq command could not be found, so installing it"
+        brew install yq
+    fi
 fi
 
 BUILD_FOLDER_NAME="build"
@@ -25,7 +35,7 @@ CONFIG_FULL_PATH="$CODE_FULL_PATH/$1"
 echo "::debug::\$CONFIG_FULL_PATH: $CONFIG_FULL_PATH"
 ANDROID_JSON_FULL_PATH="$CODE_FULL_PATH/$2"
 echo "::debug::\$ANDROID_JSON_FULL_PATH: $ANDROID_JSON_FULL_PATH"
-FULL_BUILD_PATH="$GITHUB_WORKSPACE/../$BUILD_FOLDER_NAME"
+FULL_BUILD_PATH="$GITHUB_ACTION_PATH/$BUILD_FOLDER_NAME"
 echo "::debug::\$FULL_BUILD_PATH: $FULL_BUILD_PATH"
 FULL_DIST_PATH="$GITHUB_ACTION_PATH/$DIST_FOLDER_NAME"
 echo "::debug::\$FULL_DIST_PATH: $FULL_DIST_PATH"
