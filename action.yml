@@ -46,6 +46,8 @@ runs:
     - ${{ inputs.shared-mount-path }}
     - ${{ inputs.action-shared-mount-path }}
     - ${{ inputs.android-auto-upgrade-version }}
+    - ${{ runner.os }} 
+    - ${{ runner.temp }}
 branding:
   color: 'blue'
   icon: 'package'
