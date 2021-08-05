@@ -142,5 +142,13 @@ cd "$REAL_FULL_BUILD_PATH" || exit 1
 renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
 # echo "SIMULATION: runningRenconstructWithArgs -d -i \"$CODE_FULL_PATH\" -o \"$REAL_FULL_DIST_PATH\" -c \"$CONFIG_FULL_PATH\""
 
+if "$?" -eq 0 
+then
+    echo "::debug::renconstruct was successful!"
+else
+    echo "::error::renconstruct was NOT successful"
+    exit 1
+fi
+
 REAL_FULL_DIST_PATH_LIST="$(ls -al "$REAL_FULL_DIST_PATH")"
 echo "::debug::\$REAL_FULL_DIST_PATH_LIST: $REAL_FULL_DIST_PATH_LIST"
