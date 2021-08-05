@@ -139,10 +139,10 @@ mkdir -p "$REAL_FULL_BUILD_PATH"
 
 # Execute renConstruct from within the build directory
 cd "$REAL_FULL_BUILD_PATH" || exit 1
-renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH"
+
 # echo "SIMULATION: runningRenconstructWithArgs -d -i \"$CODE_FULL_PATH\" -o \"$REAL_FULL_DIST_PATH\" -c \"$CONFIG_FULL_PATH\""
 
-if "$?" -eq 0 
+if renconstruct -d -i "$CODE_FULL_PATH" -o "$REAL_FULL_DIST_PATH" -c "$CONFIG_FULL_PATH";
 then
     echo "::debug::renconstruct was successful!"
 else
