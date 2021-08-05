@@ -39,6 +39,18 @@ then
 else
     echo "::debug::Found yq to already be installed, yay!"
 fi
+if ! command -v renutil &> /dev/null
+then
+    echo "::warning::renutil command could not be found, so installing it"
+    if ! command -v pip3 &> /dev/null
+    then
+        echo "::error::pip3 command could not be found, so aborting"
+        exit 1
+    fi
+    pip3 install renutil
+else
+    echo "::debug::Found renutil to already be installed, yay!"
+fi
 if ! command -v renconstruct &> /dev/null
 then
     echo "::warning::renconstruct command could not be found, so installing it"
