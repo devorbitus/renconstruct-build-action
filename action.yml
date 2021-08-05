@@ -46,8 +46,8 @@ runs:
     - ${{ inputs.shared-mount-path }}
     - ${{ inputs.action-shared-mount-path }}
     - ${{ inputs.android-auto-upgrade-version }}
-    - ${{ runner.os }} 
-    - ${{ runner.temp }}
+    - "linux" 
+    - "/home/runner/work/_temp/_github_workflow"
 branding:
   color: 'blue'
   icon: 'package'
