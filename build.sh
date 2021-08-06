@@ -94,6 +94,7 @@ echo "::debug::\$PUBLIC_ACTION_WORKFLOW_DIST_PATH: $PUBLIC_ACTION_WORKFLOW_DIST_
 mkdir -p "$REAL_FULL_DIST_PATH"
 
 echo ::set-output name=local-dir::"$PUBLIC_DIST_PATH"
+echo ::set-output name=dist-folder::"$DIST_FOLDER_NAME"
 echo ::set-output name=action-dir::"$PUBLIC_ACTION_WORKFLOW_DIST_PATH"
 
 SDK_VERSION=$(yq eval '.renutil.version' "$CONFIG_FULL_PATH")
