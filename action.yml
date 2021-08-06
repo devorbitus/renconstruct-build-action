@@ -22,6 +22,8 @@ inputs:
     description: "Change this default to anything other than 'true' and it won't auto increment the version within the android config json file"
     required: false
     default: 'true'
+  dist-folder:
+    description: "Folder name for dist folder"
 outputs:
   local-dir:
     description: "The directory where the distributed files exist"
@@ -44,6 +46,9 @@ outputs:
   build-name:
     description: "The official build name from the desktop project (build.name)"
     value: ${{ steps.rba.outputs.build-name }}
+  dist-folder:
+    description: "Folder name for dist folder"
+    value: ${{steps.rba.outputs.dist-folder }}
 runs:
   using: 'composite'
   steps:
