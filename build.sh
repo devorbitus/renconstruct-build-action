@@ -13,6 +13,18 @@ then
         echo "::warning::Existing conflicting Android NDK bundle found so deleting it"
         rm -rf "$HOME/Library/Android/sdk/ndk-bundle/"
     fi
+    if ! command -v gpg &> /dev/null
+    then
+        echo "::warning::gpg command could not be found, so installing it"
+        if ! command -v brew &> /dev/null
+        then
+            echo "::error::brew command could not be found, so aborting"
+            exit 1
+        fi
+        brew install gpg
+    else
+        echo "::debug::Found gpg to already be installed, yay!"
+    fi
 fi
 
 if ! command -v realpath &> /dev/null
